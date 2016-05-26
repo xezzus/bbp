@@ -1,0 +1,5 @@
+{
+    "require":{
+      "livesugar/framework":"dev-master"
+    }
+}

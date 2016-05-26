@@ -1,0 +1,57 @@
+<div class="container">
+<h3>Стенд для тестирования API</h3>
+<hr>
+<div id="registration">
+  <h4>Регистрация</h4>
+  <code>api://registration : {"phone":"(string)","device":"(string)"}</code>
+  <br><br>
+  <form class="form-inline" name="registration">
+    <input type="text" name="phone" placeholder="Phone" class="form-control input-sm"> 
+    <input type="text" name="device" placeholder="Device" class="form-control input-sm"> 
+    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
+  </form>
+  <br>
+  <pre></pre>
+</div>
+<hr>
+<div id="smsSend">
+  <h4>Отправка SMS</h4>
+  <code>api://sms/send : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
+  <br><br>
+  <form class="form-inline" name="smsSend">
+    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
+    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
+    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
+  </form>
+  <br>
+  <pre name="response"></pre>
+</div>
+<hr>
+<div id="activation">
+  <h4>Активация</h4>
+  <code>api://activation/to : {"hashPhone":"(string)","hashDevice":"(string)","sms":"(string)"}</code>
+  <br><br>
+  <form class="form-inline" name="activation">
+    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
+    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
+    <input type="text" name="sms" placeholder="SMS Code" class="form-control input-sm"> 
+    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
+  </form>
+  <br>
+  <pre name="response"></pre>
+</div>
+<hr>
+<div id="isActivation">
+  <h4>Проверка активации</h4>
+  <code>api://activation/is : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
+  <br><br>
+  <form class="form-inline" name="isActivation">
+    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
+    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
+    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
+  </form>
+  <br>
+  <pre name="response"></pre>
+</div>
+<hr>
+</div>
