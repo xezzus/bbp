@@ -4,11 +4,11 @@
 
 ### registration
 
-** Request **
+#### Request
 `
 api://registration : {"phone":"(string)","device":"(string)"}
 `
-** Response **
+### Response
 `
 {"msg":"ban for ip"}
 `
