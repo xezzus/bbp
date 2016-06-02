@@ -1,11 +1,19 @@
 <?php
-return function($hashDevice,$time){
+return function(){
   $db = $this->db->pg();
-  $sql = "select true as true from devices where device_hash = :hashDevice and ban > ".time()." limit 1";
+  $ip = $_SERVER['REMOTE_ADDR'];
+  $sql = "select time,counter from ban where ip = :ip and time > '".time()."' and counter >= 3 limit 1;";
   $sql = $db->prepare($sql);
-  $sql->execute([':hashDevice'=>$hashDevice]);
+  $sql->execute([':ip'=>$ip]);
   $res = $sql->fetch();
-  if($res === false) return false;
+  if($res === false) {
+    if($res['time'] > 0 || $res['counter'] > 0){
+      $sql = "update ban set time = 0 , counter = 0 where ip = :ip";
+      $sql = $db->prepare($sql);
+      $sql->execute([':ip'=>$ip]);
+    }
+    return false;
+  }
   else return true;
 }
 ?>

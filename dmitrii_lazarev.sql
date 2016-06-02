@@ -34,6 +34,19 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: ban; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE ban (
+    ip inet NOT NULL,
+    "time" integer DEFAULT 0 NOT NULL,
+    counter smallint DEFAULT '0'::smallint NOT NULL
+);
+
+
+ALTER TABLE ban OWNER TO postgres;
+
+--
 -- Name: devices; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -52,16 +65,40 @@ CREATE TABLE devices (
 ALTER TABLE devices OWNER TO postgres;
 
 --
--- Name: ips; Type: TABLE; Schema: public; Owner: postgres
+-- Name: requests; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE ips (
+CREATE TABLE requests (
+    id integer NOT NULL,
+    "time" integer DEFAULT 0 NOT NULL,
     ip inet NOT NULL,
-    ban integer DEFAULT 0 NOT NULL
+    device_hash text NOT NULL,
+    phone_hash text NOT NULL
 );
 
 
-ALTER TABLE ips OWNER TO postgres;
+ALTER TABLE requests OWNER TO postgres;
+
+--
+-- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE registration_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE registration_id_seq OWNER TO postgres;
+
+--
+-- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE registration_id_seq OWNED BY requests.id;
+
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -76,6 +113,13 @@ CREATE TABLE users (
 
 
 ALTER TABLE users OWNER TO postgres;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_seq'::regclass);
+
 
 --
 -- Name: devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -105,8 +149,16 @@ ALTER TABLE ONLY devices
 -- Name: ips_ip; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY ips
+ALTER TABLE ONLY ban
     ADD CONSTRAINT ips_ip PRIMARY KEY (ip);
+
+
+--
+-- Name: requests_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests
+    ADD CONSTRAINT requests_id PRIMARY KEY (id);
 
 
 --
@@ -123,6 +175,22 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY devices
     ADD CONSTRAINT devices_phone_hash_fkey FOREIGN KEY (phone_hash) REFERENCES users(phone_hash) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: requests_device_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests
+    ADD CONSTRAINT requests_device_hash_fkey FOREIGN KEY (device_hash) REFERENCES devices(device_hash) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: requests_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY requests
+    ADD CONSTRAINT requests_phone_hash_fkey FOREIGN KEY (phone_hash) REFERENCES users(phone_hash) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

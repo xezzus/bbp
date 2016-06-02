@@ -1,56 +1,63 @@
 <?php
 return function($phone,$device){
-  $db = $this->db->pg();
+
+  # проверяем бан: 3 действия за 24 часа
+  if($this->request->isBan()) {
+    self::$http = true;
+    return ['msg'=>'it is banned'];
+  }
+
+  # переводим значения в HASH
   $hashPhone = $this->hash->create($phone);
   $hashDevice = $this->hash->create($device);
 
-  # Ban for enter sms
-  if($this->ban->is($hashDevice,86400)){
-    self::$http = true;
-    return ['msg'=>'ban to registration'];
-  }
+  # логируем запрос
+  $this->request->rec($hashDevice,$hashPhone);
 
-  # check device
-  $sql = "select sms, phone_hash from devices where device_hash = :hashDevice limit 1";
-  $sql = $db->prepare($sql);
-  $sql->execute([':hashDevice'=>$hashDevice]);
-  $res = $sql->fetch();
+  # подключаемся к базе
+  $db = $this->db->pg();
 
-  if($res != false){
-    # Check user to device
-    if($res['phone_hash'] != $hashPhone){
-      $sql = "update devices set activated = false, ban = '".(time()+86400)."' where device_hash = :hashDevice";
-      $sql = $db->prepare($sql);
-      $sql->execute([':hashDevice'=>$hashDevice]);
-      $this->sms->send($res['phone_hash'],$hashDevice);
-      self::$http = true;
-      return ['msg'=>'Waiting confirm. Please try again in 24 hours.'];
+  # проверяем есть ли пользователь в базе, если нет то добавляем
+  if(!$this->user->is($hashPhone)) $this->user->rec($phone,$hashPhone);
+
+  # проверяем принадлежит ли устройство другому пользователю
+  $whois = $this->device->whois($hashDevice);
+  if($whois !== false && $whois != $hashPhone){
+    # проверяем пыталсяли данный пользовать регистрировать это устройство
+    if($this->request->isRegistration($hashDevice,$hashPhone)){
+      # получить время последнего запроса, если был запрос
+      $time = $this->request->getLastTime($hashDevice,$hashPhone);
+      if($time >= (time()-86400)){
+        # если активно баним ip
+        if($this->device->isActive($hashDevice)){
+          # баним ip
+          $this->ban->set();
+        } else {
+          # присваем устройство другому пользователю
+          $this->device->assign($hashDevice,$hashPhone);
+        }
+      }
     } else {
+      # дективируем устройство
+      $this->device->deactivation($hashDevice);
+      # отправляем sms
+      $this->device->sendSms($hashDevice);
+      # отправляем ошибку
       self::$http = true;
-      return ['msg'=>'This registration isset'];
+      return ['msg'=>'the device is waiting for confirmation'];
     }
-  } else {
-    # insert
-    $sql = "insert into users (phone_hash,phone) values (:hashPhone,:phone) returning true as true;";
-    $sql = $db->prepare($sql);
-    $sql->execute([':hashPhone'=>$hashPhone,':phone'=>$phone]);
-    $res = $sql->fetch();
-    if($res === false) $status['user'] = 'isset';
-    else $status['user'] = 'insert';
-    $sql = "insert into devices (device_hash,phone_hash) values (:hashDevice,:hashPhone)";
-    $sql = $db->prepare($sql);
-    $sql->execute([':hashDevice'=>$hashDevice,':hashPhone'=>$hashPhone]);
-    $res = $sql->fetch();
-    if($res === false) $status['device'] = 'isset';
-    else $status['device'] = 'insert';
-
-    # Sms
-    if($this->sms->send($hashPhone,$hashDevice)) $status['sms'] = 'send';
-    else $status['sms'] = 'not send';
-
-    # Response
-    self::$http = true;
-    return ["hash"=>["phone"=>$hashPhone,"device"=>$hashDevice],"status"=>$status];
   }
+
+  # проверить, есть ли запись в devices
+  if(!$this->device->is($hashDevice)){
+    $this->device->rec($hashDevice,$hashPhone);
+  }
+
+  # отправляем sms
+  $this->device->sendSms($hashDevice);
+
+  # отправить hash
+  self::$http = true;
+  return ['hashDevice'=>$hashDevice,'hashPhone'=>$hashPhone];
 }
 ?>
