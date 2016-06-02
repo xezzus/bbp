@@ -46,6 +46,9 @@ return function($phone,$device){
       self::$http = true;
       return ['msg'=>'the device is waiting for confirmation'];
     }
+  } else {
+    self::$http = true;
+    return ['msg'=>'Устройство переназначено'];
   }
 
   # проверить, есть ли запись в devices
