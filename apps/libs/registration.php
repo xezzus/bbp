@@ -14,9 +14,6 @@ return function($phone,$device){
   # логируем запрос
   $this->request->rec($hashDevice,$hashPhone);
 
-  # подключаемся к базе
-  $db = $this->db->pg();
-
   # проверяем есть ли пользователь в базе, если нет то добавляем
   if(!$this->user->is($hashPhone)) $this->user->rec($phone,$hashPhone);
 
