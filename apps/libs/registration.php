@@ -33,6 +33,9 @@ return function($phone,$device){
           # присваем устройство другому пользователю
           $this->device->assign($hashDevice,$hashPhone);
         }
+      } else {
+        self::$http = true;
+        return ['msg'=>'the device is waiting for confirmation'];
       }
     } else {
       # дективируем устройство
