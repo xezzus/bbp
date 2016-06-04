@@ -73,7 +73,9 @@ CREATE TABLE requests (
     "time" integer DEFAULT 0 NOT NULL,
     ip inet NOT NULL,
     device_hash text NOT NULL,
-    phone_hash text NOT NULL
+    phone_hash text NOT NULL,
+    capture boolean DEFAULT false NOT NULL,
+    power smallint DEFAULT '1'::smallint NOT NULL
 );
 
 
