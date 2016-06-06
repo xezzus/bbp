@@ -13,6 +13,8 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+SET SESSION AUTHORIZATION DEFAULT;
+
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
@@ -26,6 +28,8 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
+
+SET SESSION AUTHORIZATION 'postgres';
 
 SET search_path = public, pg_catalog;
 
@@ -49,8 +53,6 @@ CREATE TABLE devices (
 );
 
 
-ALTER TABLE devices OWNER TO postgres;
-
 --
 -- Name: requests; Type: TABLE; Schema: public; Owner: postgres
 --
@@ -66,8 +68,6 @@ CREATE TABLE requests (
 );
 
 
-ALTER TABLE requests OWNER TO postgres;
-
 --
 -- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -79,8 +79,6 @@ CREATE SEQUENCE registration_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE registration_id_seq OWNER TO postgres;
 
 --
 -- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -99,8 +97,6 @@ CREATE TABLE request_types (
 );
 
 
-ALTER TABLE request_types OWNER TO postgres;
-
 --
 -- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
@@ -112,8 +108,6 @@ CREATE SEQUENCE request_types_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
-ALTER TABLE request_types_id_seq OWNER TO postgres;
 
 --
 -- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
@@ -133,8 +127,6 @@ CREATE TABLE users (
     phone text NOT NULL
 );
 
-
-ALTER TABLE users OWNER TO postgres;
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
