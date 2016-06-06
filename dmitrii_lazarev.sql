@@ -151,6 +151,56 @@ ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_s
 
 
 --
+-- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ban, sms_counter_enter) FROM stdin;
+\.
+
+
+--
+-- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('registration_id_seq', 240, true);
+
+
+--
+-- Data for Name: request_types; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY request_types (id, name) FROM stdin;
+1	registration
+2	capture
+3	activation
+0	none
+\.
+
+
+--
+-- Name: request_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('request_types_id_seq', 3, true);
+
+
+--
+-- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
+\.
+
+
+--
 -- Name: devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
