@@ -1,7 +1,5 @@
 #!/bin/sh
 
-cd /var/www/dlazarev/data/www/soknn.ru
-
 /usr/bin/git add -A
-/usr/bin/git commit -m "server"
+/usr/bin/git commit -m "Developing"
 /usr/bin/git push origin master
