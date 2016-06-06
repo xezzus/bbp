@@ -13,23 +13,19 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
-SET SESSION AUTHORIZATION DEFAULT;
-
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
-
-SET SESSION AUTHORIZATION 'postgres';
 
 SET search_path = public, pg_catalog;
 
@@ -38,7 +34,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: devices; Type: TABLE; Schema: public; Owner: postgres
+-- Name: devices; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE devices (
@@ -54,7 +50,7 @@ CREATE TABLE devices (
 
 
 --
--- Name: requests; Type: TABLE; Schema: public; Owner: postgres
+-- Name: requests; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE requests (
@@ -69,7 +65,7 @@ CREATE TABLE requests (
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE registration_id_seq
@@ -81,14 +77,14 @@ CREATE SEQUENCE registration_id_seq
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE registration_id_seq OWNED BY requests.id;
 
 
 --
--- Name: request_types; Type: TABLE; Schema: public; Owner: postgres
+-- Name: request_types; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE request_types (
@@ -98,7 +94,7 @@ CREATE TABLE request_types (
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE request_types_id_seq
@@ -110,14 +106,14 @@ CREATE SEQUENCE request_types_id_seq
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
 ALTER SEQUENCE request_types_id_seq OWNED BY request_types.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: postgres
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -129,21 +125,21 @@ CREATE TABLE users (
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY request_types ALTER COLUMN id SET DEFAULT nextval('request_types_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_seq'::regclass);
 
 
 --
--- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ban, sms_counter_enter) FROM stdin;
@@ -151,14 +147,14 @@ COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ba
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('registration_id_seq', 240, true);
 
 
 --
--- Data for Name: request_types; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: request_types; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY request_types (id, name) FROM stdin;
@@ -170,14 +166,14 @@ COPY request_types (id, name) FROM stdin;
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: request_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
 SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 
 
 --
--- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
@@ -185,7 +181,7 @@ COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
@@ -193,7 +189,7 @@ COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
 
 
 --
--- Name: devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY devices
@@ -201,7 +197,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: devices_phone_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: devices_phone_hash; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY devices
@@ -209,7 +205,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: devices_phone_hash_device_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: devices_phone_hash_device_hash; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY devices
@@ -217,7 +213,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: request_types_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: request_types_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY request_types
@@ -225,7 +221,7 @@ ALTER TABLE ONLY request_types
 
 
 --
--- Name: request_types_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: request_types_name; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY request_types
@@ -233,7 +229,7 @@ ALTER TABLE ONLY request_types
 
 
 --
--- Name: requests_id; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: requests_id; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY requests
@@ -241,7 +237,7 @@ ALTER TABLE ONLY requests
 
 
 --
--- Name: users_phone_hash; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: users_phone_hash; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -249,7 +245,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: devices_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: devices_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY devices
@@ -257,7 +253,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: requests_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: requests_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY requests
