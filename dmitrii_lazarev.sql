@@ -113,15 +113,6 @@ ALTER SEQUENCE request_types_id_seq OWNED BY request_types.id;
 
 
 --
--- Name: test; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE test (
-    test integer NOT NULL
-);
-
-
---
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -186,14 +177,6 @@ SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
-\.
-
-
---
--- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY test (test) FROM stdin;
 \.
 
 
