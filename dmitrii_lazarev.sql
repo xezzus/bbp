@@ -34,19 +34,6 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: ban; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE ban (
-    ip inet NOT NULL,
-    "time" integer DEFAULT 0 NOT NULL,
-    counter smallint DEFAULT '0'::smallint NOT NULL
-);
-
-
-ALTER TABLE ban OWNER TO postgres;
-
---
 -- Name: devices; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -74,8 +61,8 @@ CREATE TABLE requests (
     ip inet NOT NULL,
     device_hash text NOT NULL,
     phone_hash text NOT NULL,
-    capture boolean DEFAULT false NOT NULL,
-    power smallint DEFAULT '1'::smallint NOT NULL
+    power smallint DEFAULT '1'::smallint NOT NULL,
+    type smallint DEFAULT '0'::smallint NOT NULL
 );
 
 
@@ -103,6 +90,39 @@ ALTER SEQUENCE registration_id_seq OWNED BY requests.id;
 
 
 --
+-- Name: request_types; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE request_types (
+    id integer NOT NULL,
+    name text NOT NULL
+);
+
+
+ALTER TABLE request_types OWNER TO postgres;
+
+--
+-- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE request_types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE request_types_id_seq OWNER TO postgres;
+
+--
+-- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE request_types_id_seq OWNED BY request_types.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -115,6 +135,13 @@ CREATE TABLE users (
 
 
 ALTER TABLE users OWNER TO postgres;
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_types ALTER COLUMN id SET DEFAULT nextval('request_types_id_seq'::regclass);
+
 
 --
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
@@ -148,11 +175,19 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: ips_ip; Type: CONSTRAINT; Schema: public; Owner: postgres
+-- Name: request_types_id; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY ban
-    ADD CONSTRAINT ips_ip PRIMARY KEY (ip);
+ALTER TABLE ONLY request_types
+    ADD CONSTRAINT request_types_id PRIMARY KEY (id);
+
+
+--
+-- Name: request_types_name; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request_types
+    ADD CONSTRAINT request_types_name UNIQUE (name);
 
 
 --
@@ -180,19 +215,11 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: requests_device_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: requests_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY requests
-    ADD CONSTRAINT requests_device_hash_fkey FOREIGN KEY (device_hash) REFERENCES devices(device_hash) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: requests_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY requests
-    ADD CONSTRAINT requests_phone_hash_fkey FOREIGN KEY (phone_hash) REFERENCES users(phone_hash) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT requests_type_fkey FOREIGN KEY (type) REFERENCES request_types(id) ON UPDATE CASCADE ON DELETE SET DEFAULT;
 
 
 --

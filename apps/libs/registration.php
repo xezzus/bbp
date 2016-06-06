@@ -2,7 +2,7 @@
 return function($phone,$device){
 
   # проверяем бан: 3 действия за 24 часа
-  if($this->request->isBan()) {
+  if($this->request->isBan(1,3,86400)) {
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
@@ -12,7 +12,10 @@ return function($phone,$device){
   $hashDevice = $this->hash->create($device);
 
   # логируем запрос
-  $this->request->rec($hashDevice,$hashPhone);
+  if(!$this->request->rec($hashDevice,$hashPhone,1)){
+    self::$http = true;
+    return ['msg'=>'не получилось залогировать'];
+  }
 
   # проверяем есть ли пользователь в базе, если нет то добавляем
   if(!$this->user->is($hashPhone)) $this->user->rec($phone,$hashPhone);
@@ -21,14 +24,14 @@ return function($phone,$device){
   $whois = $this->device->whois($hashDevice);
   if($whois != false && $whois != $hashPhone){
     # проверяем пыталсяли данный пользовать регистрировать это устройство
-    if($this->request->isCapture($hashDevice,$hashPhone)){
+    if($this->request->is($hashDevice,$hashPhone,2)){
       # получить время последнего запроса, если был запрос
-      $time = $this->request->getLastTime($hashDevice,$hashPhone);
+      $time = $this->request->getLastTime($hashDevice,$hashPhone,2);
       if((time()-$time) >= 30){
         # если активно баним ip
         if($this->device->isActive($hashDevice)){
           # баним ip
-          $this->request->rec($hashDevice,$hashPhone,3);
+          $this->request->rec($hashDevice,$hashPhone,2,3);
           self::$http = true;
           return ['msg'=>'it is banned'];
         } else {
@@ -46,7 +49,7 @@ return function($phone,$device){
       # отправляем sms
       $this->device->sendSms($hashDevice);
       # Фиксируем попытку захвата
-      $this->request->recCapture($hashDevice,$hashPhone);
+      $this->request->rec($hashDevice,$hashPhone,2);
       # отправляем ошибку
       self::$http = true;
       return ['msg'=>'the device is waiting for confirmation'];
