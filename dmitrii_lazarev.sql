@@ -143,6 +143,7 @@ ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_s
 --
 
 COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ban, sms_counter_enter) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	67084	1465371392	7	f	0	0
 \.
 
 
@@ -150,7 +151,7 @@ COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ba
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 240, true);
+SELECT pg_catalog.setval('registration_id_seq', 247, true);
 
 
 --
@@ -177,6 +178,13 @@ SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
+241	1465371298	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+242	1465371327	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+243	1465371328	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+244	1465371329	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+245	1465371329	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+246	1465371330	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
+247	1465371392	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu2Xaw4ur7ZiSKvt2kCiwJvf92eChgjiu	$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	1	1
 \.
 
 
@@ -185,6 +193,7 @@ COPY requests (id, "time", ip, device_hash, phone_hash, power, type) FROM stdin;
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMO9NuBYVlimHpINQjyTMuFJ79idYf/W	\N	0	dsfg
 \.
 
 
