@@ -1,12 +1,12 @@
 <?php
-return function($type,$count,$time){
+return function(){
   $ip = $_SERVER['REMOTE_ADDR'];
   $db = $this->db->pg();
-  $sql = "select sum(power) as count from requests where ip = :ip and time >= :time and type = :type";
+  $sql = "select true as true from requests where ip = :ip and time_ban >= :time";
   $sql = $db->prepare($sql);
-  $sql->execute([':ip'=>$ip,':time'=>(time()-$time),':type'=>$type]);
+  $sql->execute([':ip'=>$ip,':time'=>time()]);
   $res = $sql->fetch();
-  if($res['count'] >= $count) return true;
-  else return false;
+  if($res === false) return false;
+  else return true;
 }
 ?>

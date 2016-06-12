@@ -1,8 +1,8 @@
 <?php
 return function($phone,$device){
 
-  # проверяем бан: 3 действия за 24 часа
-  if($this->request->isBan(1,3,86400)) {
+  # преверяем на бан
+  if($this->request->isBan()){
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
@@ -10,6 +10,13 @@ return function($phone,$device){
   # переводим значения в HASH
   $hashPhone = $this->hash->create($phone);
   $hashDevice = $this->hash->create($device);
+
+  # проверяем бан: 3 действия за 24 часа
+  if($this->request->count(86400) >= 3){
+    $this->request->setBan($hashDevice,$hashPhone,86400,1);
+    self::$http = true;
+    return ['msg'=>'it is set banned'];
+  }
 
   # логируем запрос
   if(!$this->request->rec($hashDevice,$hashPhone,1)){
