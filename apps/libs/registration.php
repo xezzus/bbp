@@ -12,7 +12,7 @@ return function($phone,$device){
   $hashDevice = $this->hash->create($device);
 
   # проверяем бан: 3 действия за 24 часа
-  if($this->request->count(86400) >= 3){
+  if($this->request->count(86400,1) >= 3){
     $this->request->setBan($hashDevice,$hashPhone,86400,1);
     self::$http = true;
     return ['msg'=>'it is set banned'];
@@ -38,7 +38,7 @@ return function($phone,$device){
         # если активно баним ip
         if($this->device->isActive($hashDevice)){
           # баним ip
-          $this->request->rec($hashDevice,$hashPhone,2,3);
+          $this->request->setBan($hashDevice,$hashPhone,86400,1);
           self::$http = true;
           return ['msg'=>'it is banned'];
         } else {

@@ -2,7 +2,7 @@ $(function(){
   var formRegistration = $('form[name=registration]');
   var formSmsSend = $('form[name=smsSend]');
   var formActivation = $('form[name=activation]');
-  var formIsActivation = $('form[name=isActivation]');
+  var formEnter = $('form[name=enter]');
   formRegistration.find('input[type=button]').on('click',function(e){
     var form = $(this).parent();
     var data = {};
@@ -42,7 +42,7 @@ $(function(){
       $('#activation').find('pre').text(json);
     });
   });
-  formIsActivation.find('input[type=button]').on('click',function(e){
+  formEnter.find('input[type=button]').on('click',function(e){
     var form = $(this).parent();
     var data = {};
     form.find('input[type=text]').each(function(i,e){
@@ -50,9 +50,9 @@ $(function(){
       var value = $(e).val();
       data[name] = value;
     });
-    apps.name('activation/is').data(data).exec(function(e){
+    apps.name('enter').data(data).exec(function(e){
       var json = JSON.stringify(e,null,'  ');
-      $('#isActivation').find('pre').text(json);
+      $('#enter').find('pre').text(json);
     });
   });
 });

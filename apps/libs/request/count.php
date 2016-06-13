@@ -1,5 +1,5 @@
 <?php
-return function($time){
+return function($time,$type=0){
   $ip = $_SERVER['REMOTE_ADDR'];
   $db = $this->db->pg();
   $sql = "select count(0) as count from requests where ip = :ip and time >= :time";

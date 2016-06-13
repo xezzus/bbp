@@ -1,5 +1,5 @@
 <?php
-return function($hashPhone,$hashDevice){
+return function($hashDevice,$hashPhone){
   $db = $this->db->pg();
   $sql = "select true as true from devices where device_hash = :hashDevice and phone_hash = :hashPhone and activated = true limit 1";
   $sql = $db->prepare($sql);
