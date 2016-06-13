@@ -1,7 +1,7 @@
 <?php
 return function($hashPhone,$hashDevice,$sms){
   # преверяем на бан
-  if($this->request->isBan()){
+  if($this->ban->is()){
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
@@ -11,12 +11,12 @@ return function($hashPhone,$hashDevice,$sms){
   if(!empty($whois) && !empty($hashPhone) && $whois == $hashPhone){
     # да
     # код введен 3 раза за 15 минут?
-    if($this->request->count(900,3) < 3){
+    if($this->request->count($hashDevice,$hashPhone,900,3) < 3){
       # да
       # логируем ыыод кода
       if($this->request->rec($hashDevice,$hashPhone,3)){
         # Совпадаютли коды
-        if($this->device->isSmsCode($hashDevice,$sms)){
+        if($this->sms->isCode($hashDevice,$sms)){
           # да
           # активируем устройство
           if($this->device->activate($hashDevice)){
@@ -39,13 +39,13 @@ return function($hashPhone,$hashDevice,$sms){
       }
     } else {
       # забанить на 15 минут
-      $this->request->setBan($hashDevice,$hashPhone,900,3);
+      $this->ban->set(900);
       self::$http = true;
       return ['msg'=>'set is banned 15 minutes'];
     }
   } else {
     # забанить на 24 часа
-    $this->request->setBan($hashDevice,$hashPhone,86400,3);
+    $this->ban->set(86400);
     self::$http = true;
     return ['msg'=>'set is banned 24 hour'];
   }

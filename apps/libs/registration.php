@@ -2,7 +2,7 @@
 return function($phone,$device){
 
   # преверяем на бан
-  if($this->request->isBan()){
+  if($this->ban->is()){
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
@@ -12,8 +12,8 @@ return function($phone,$device){
   $hashDevice = $this->hash->create($device);
 
   # проверяем бан: 3 действия за 24 часа
-  if($this->request->count(86400,1) >= 3){
-    $this->request->setBan($hashDevice,$hashPhone,86400,1);
+  if($this->request->count($hashDevice,$hashPhone,86400,1) >= 3){
+    $this->ban->set(86400);
     self::$http = true;
     return ['msg'=>'it is set banned'];
   }
@@ -38,7 +38,7 @@ return function($phone,$device){
         # если активно баним ip
         if($this->device->isActive($hashDevice)){
           # баним ip
-          $this->request->setBan($hashDevice,$hashPhone,86400,1);
+          $this->ban->set(86400);
           self::$http = true;
           return ['msg'=>'it is banned'];
         } else {
@@ -54,7 +54,7 @@ return function($phone,$device){
       # дективируем устройство
       $this->device->deactivation($hashDevice);
       # отправляем sms
-      $this->device->sendSms($hashDevice);
+      $this->sms->send($hashDevice);
       # Фиксируем попытку захвата
       $this->request->rec($hashDevice,$hashPhone,2);
       # отправляем ошибку
@@ -69,7 +69,7 @@ return function($phone,$device){
   }
 
   # отправляем sms
-  $this->device->sendSms($hashDevice);
+  $this->sms->send($hashDevice);
 
   # отправить hash
   self::$http = true;

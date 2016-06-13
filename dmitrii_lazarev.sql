@@ -34,6 +34,36 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: bans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE bans (
+    id integer NOT NULL,
+    ip inet NOT NULL,
+    "time" integer NOT NULL
+);
+
+
+--
+-- Name: bans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE bans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: bans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE bans_id_seq OWNED BY bans.id;
+
+
+--
 -- Name: devices; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -41,11 +71,7 @@ CREATE TABLE devices (
     phone_hash text NOT NULL,
     device_hash text NOT NULL,
     sms text DEFAULT 'test'::text,
-    sms_time integer DEFAULT 0 NOT NULL,
-    sms_counter integer DEFAULT 0 NOT NULL,
-    activated boolean DEFAULT false NOT NULL,
-    ban integer DEFAULT 0 NOT NULL,
-    sms_counter_enter smallint DEFAULT '0'::smallint NOT NULL
+    activated boolean DEFAULT false NOT NULL
 );
 
 
@@ -59,9 +85,7 @@ CREATE TABLE requests (
     ip inet NOT NULL,
     device_hash text NOT NULL,
     phone_hash text NOT NULL,
-    power smallint DEFAULT '1'::smallint NOT NULL,
-    type smallint DEFAULT '0'::smallint NOT NULL,
-    time_ban integer DEFAULT 0 NOT NULL
+    type smallint DEFAULT '0'::smallint NOT NULL
 );
 
 
@@ -129,6 +153,13 @@ CREATE TABLE users (
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY bans ALTER COLUMN id SET DEFAULT nextval('bans_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY request_types ALTER COLUMN id SET DEFAULT nextval('request_types_id_seq'::regclass);
 
 
@@ -140,11 +171,28 @@ ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_s
 
 
 --
+-- Data for Name: bans; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY bans (id, ip, "time") FROM stdin;
+\.
+
+
+--
+-- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('bans_id_seq', 7, true);
+
+
+--
 -- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY devices (phone_hash, device_hash, sms, sms_time, sms_counter, activated, ban, sms_counter_enter) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897asdf897asdfulteCg2IAMZt6/X4Y75l0.fQCzmwXx/e	79814	1465798680	1	t	0	0
+COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	46704	t
+$2a$07$lkjasdf897asdf897asdfuV9anpmdiC7.PGEcEsHMeaALTKFcksCG	$2a$07$lkjasdf897asdf897asdfubIK4qNd4iGfLcjHppS1mbl55g/RxTvO	test	f
+$2a$07$lkjasdf897asdf897asdfufqbwRPnRyXRNqLIsSoB6xd6NS7/dd1m	$2a$07$lkjasdf897asdf897asdfuyzpkBpBwd3K8rnfmvBzE0/BC0j7oho.	test	f
 \.
 
 
@@ -152,7 +200,7 @@ $2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897as
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 280, true);
+SELECT pg_catalog.setval('registration_id_seq', 303, true);
 
 
 --
@@ -164,6 +212,7 @@ COPY request_types (id, name) FROM stdin;
 2	capture
 3	activation
 0	none
+4	smssend
 \.
 
 
@@ -178,9 +227,9 @@ SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 -- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY requests (id, "time", ip, device_hash, phone_hash, power, type, time_ban) FROM stdin;
-279	1465798680	192.168.0.47	$2a$07$lkjasdf897asdf897asdfulteCg2IAMZt6/X4Y75l0.fQCzmwXx/e	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	1	1	0
-280	1465798737	192.168.0.47	$2a$07$lkjasdf897asdf897asdfulteCg2IAMZt6/X4Y75l0.fQCzmwXx/e	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	1	3	0
+COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
+303	1465830150	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	4
+302	1465830040	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	4
 \.
 
 
@@ -189,8 +238,18 @@ COPY requests (id, "time", ip, device_hash, phone_hash, power, type, time_ban) F
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2y$11$J257ctwAEXvqVrUj/UPvwuooEijNfgbRJhs6V4Am9lYiraS8SeU.K	1465798756	u2
+$2a$07$lkjasdf897asdf897asdfuV9anpmdiC7.PGEcEsHMeaALTKFcksCG	\N	0	w1
+$2a$07$lkjasdf897asdf897asdfufqbwRPnRyXRNqLIsSoB6xd6NS7/dd1m	\N	0	d
+$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2y$11$Ti6Xb2tMrZT.1vsEbyciOeHz82njSzCXgQPjXCFcuncuTh5C1yCFC	1465828146	g
 \.
+
+
+--
+-- Name: bans_id; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY bans
+    ADD CONSTRAINT bans_id PRIMARY KEY (id);
 
 
 --
@@ -258,6 +317,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: bans_ip_time; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX bans_ip_time ON bans USING btree (ip, "time");
+
+
+--
 -- Name: devices_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -270,10 +336,4 @@ ALTER TABLE ONLY devices
 --
 
 ALTER TABLE ONLY requests
-    ADD CONSTRAINT requests_type_fkey FOREIGN KEY (type) REFERENCES request_types(id) ON UPDATE CASCADE ON DELETE SET DEFAULT;
-
-
---
--- PostgreSQL database dump complete
---
-
+    ADD CONSTRAINT re

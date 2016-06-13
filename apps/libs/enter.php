@@ -1,7 +1,7 @@
 <?php
 return function($hashDevice,$hashPhone){
   # преверяем на бан
-  if($this->request->isBan()){
+  if($this->ban->is()){
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
@@ -25,7 +25,7 @@ return function($hashDevice,$hashPhone){
   } else {
     # нет
     # забанить на 24 часа
-    $this->request->setBan($hashDevice,$hashPhone,86400,3);
+    $this->ban->set(86400);
     self::$http = true;
     return ['msg'=>'set is banned 24 hour'];
   }

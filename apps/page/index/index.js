@@ -24,7 +24,7 @@ $(function(){
       var value = $(e).val();
       data[name] = value;
     });
-    apps.name('sms/send').data(data).exec(function(e){
+    apps.name('sms/resending').data(data).exec(function(e){
       var json = JSON.stringify(e,null,'  ');
       $('#smsSend').find('pre').text(json);
     });

@@ -2,7 +2,7 @@
 return function(){
   $ip = $_SERVER['REMOTE_ADDR'];
   $db = $this->db->pg();
-  $sql = "select true as true from requests where ip = :ip and time_ban >= :time";
+  $sql = "select true as true from bans where ip = :ip and time >= :time limit 1";
   $sql = $db->prepare($sql);
   $sql->execute([':ip'=>$ip,':time'=>time()]);
   $res = $sql->fetch();

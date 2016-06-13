@@ -14,19 +14,6 @@
   <pre></pre>
 </div>
 <hr>
-<div id="smsSend">
-  <h4>Отправка SMS</h4>
-  <code>api://sms/send : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
-  <br><br>
-  <form class="form-inline" name="smsSend">
-    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
-    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
-    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
-  </form>
-  <br>
-  <pre name="response"></pre>
-</div>
-<hr>
 <div id="activation">
   <h4>Активация</h4>
   <code>api://activation/to : {"hashPhone":"(string)","hashDevice":"(string)","sms":"(string)"}</code>
@@ -46,6 +33,19 @@
   <code>api://enter : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
   <br><br>
   <form class="form-inline" name="enter">
+    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
+    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
+    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
+  </form>
+  <br>
+  <pre name="response"></pre>
+</div>
+<hr>
+<div id="smsSend">
+  <h4>Отправка SMS</h4>
+  <code>api://sms/resending : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
+  <br><br>
+  <form class="form-inline" name="smsSend">
     <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
     <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
     <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
