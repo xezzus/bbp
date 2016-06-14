@@ -175,7 +175,6 @@ ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_s
 --
 
 COPY bans (id, ip, "time") FROM stdin;
-8	192.168.0.47	1466010219
 \.
 
 
@@ -191,10 +190,11 @@ SELECT pg_catalog.setval('bans_id_seq', 8, true);
 --
 
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	46704	t
-$2a$07$lkjasdf897asdf897asdfukxORmTNBdTyNF2VVsL0NY.n2A4utz9e	$2a$07$lkjasdf897asdf897asdfu0C59orwF0UC/2LtD6VNYq3DRUjD/xb.	35401	f
-$2a$07$lkjasdf897asdf897asdfuV9anpmdiC7.PGEcEsHMeaALTKFcksCG	$2a$07$lkjasdf897asdf897asdfubIK4qNd4iGfLcjHppS1mbl55g/RxTvO	test	f
-$2a$07$lkjasdf897asdf897asdfufqbwRPnRyXRNqLIsSoB6xd6NS7/dd1m	$2a$07$lkjasdf897asdf897asdfuyzpkBpBwd3K8rnfmvBzE0/BC0j7oho.	test	f
+$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	25391	f
+$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	65569	f
+$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	65527	f
+$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	17148	f
+$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	78998	f
 \.
 
 
@@ -202,7 +202,7 @@ $2a$07$lkjasdf897asdf897asdfufqbwRPnRyXRNqLIsSoB6xd6NS7/dd1m	$2a$07$lkjasdf897as
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 306, true);
+SELECT pg_catalog.setval('registration_id_seq', 311, true);
 
 
 --
@@ -230,11 +230,11 @@ SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
-303	1465830150	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	4
-304	1465923813	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu0C59orwF0UC/2LtD6VNYq3DRUjD/xb.	$2a$07$lkjasdf897asdf897asdfukxORmTNBdTyNF2VVsL0NY.n2A4utz9e	1
-305	1465923816	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu0C59orwF0UC/2LtD6VNYq3DRUjD/xb.	$2a$07$lkjasdf897asdf897asdfukxORmTNBdTyNF2VVsL0NY.n2A4utz9e	1
-306	1465923818	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu0C59orwF0UC/2LtD6VNYq3DRUjD/xb.	$2a$07$lkjasdf897asdf897asdfukxORmTNBdTyNF2VVsL0NY.n2A4utz9e	1
-302	1465830040	192.168.0.47	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	4
+307	1465924180	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	1
+308	1465924184	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	1
+309	1465924189	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	1
+310	1465924193	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	1
+311	1465924197	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	1
 \.
 
 
@@ -243,10 +243,11 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuV9anpmdiC7.PGEcEsHMeaALTKFcksCG	\N	0	w1
-$2a$07$lkjasdf897asdf897asdfufqbwRPnRyXRNqLIsSoB6xd6NS7/dd1m	\N	0	d
-$2a$07$lkjasdf897asdf897asdfu5qbWL6YXlDe.X1bF8TE9bzLJ3bFLvTa	$2y$11$Ti6Xb2tMrZT.1vsEbyciOeHz82njSzCXgQPjXCFcuncuTh5C1yCFC	1465828146	g
-$2a$07$lkjasdf897asdf897asdfukxORmTNBdTyNF2VVsL0NY.n2A4utz9e	\N	0	sdafg
+$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	\N	0	u1
+$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	\N	0	u2
+$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	\N	0	u3
+$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	\N	0	u4
+$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	\N	0	u5
 \.
 
 
