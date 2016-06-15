@@ -182,7 +182,7 @@ COPY bans (id, ip, "time") FROM stdin;
 -- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 8, true);
+SELECT pg_catalog.setval('bans_id_seq', 10, true);
 
 
 --
@@ -190,11 +190,7 @@ SELECT pg_catalog.setval('bans_id_seq', 8, true);
 --
 
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	25391	f
-$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	65569	f
-$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	65527	f
-$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	17148	f
-$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	78998	f
+$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2a$07$lkjasdf897asdf897asdfuxvd2kV0u1zmM8Mt9I0kFOvZhhYlxCmW	46901	t
 \.
 
 
@@ -202,7 +198,7 @@ $2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	$2a$07$lkjasdf897as
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 311, true);
+SELECT pg_catalog.setval('registration_id_seq', 317, true);
 
 
 --
@@ -230,11 +226,8 @@ SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
-307	1465924180	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	1
-308	1465924184	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	1
-309	1465924189	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	1
-310	1465924193	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	1
-311	1465924197	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	1
+316	1465980934	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuxvd2kV0u1zmM8Mt9I0kFOvZhhYlxCmW	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	1
+317	1465980955	192.168.0.47	$2a$07$lkjasdf897asdf897asdfuxvd2kV0u1zmM8Mt9I0kFOvZhhYlxCmW	$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	3
 \.
 
 
@@ -243,11 +236,7 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	\N	0	u1
-$2a$07$lkjasdf897asdf897asdfuJxzQPUBS9I5xUr/gGuj.1AcJA2LdROW	\N	0	u2
-$2a$07$lkjasdf897asdf897asdfuvixkQ505cTQsO1qembXIQSijQcSzcYa	\N	0	u3
-$2a$07$lkjasdf897asdf897asdfuRT3/zPVFf3gvsEPEQsop4JGv1em1JLC	\N	0	u4
-$2a$07$lkjasdf897asdf897asdfuYa/qqS/Km5M09Mv5d12Gyd7O9Ji4lzK	\N	0	u5
+$2a$07$lkjasdf897asdf897asdfuD3UrSD4vJd6WxPUBAeq47oiR8yKVR7O	$2y$11$lhU2MuHaaZbcTZC0mOEMsecdyWApddd0PaKGM0DXdVJLvu3RSBZuS	1465980955	u1
 \.
 
 
