@@ -1,57 +1,25 @@
 <div class="container">
-<h3>Стенд для тестирования API</h3>
-<hr>
-<div id="registration">
-  <h4>Регистрация</h4>
-  <code>api://registration : {"phone":"(string)","device":"(string)"}</code>
-  <br><br>
-  <form class="form-inline" name="registration">
-    <input type="text" name="phone" placeholder="Phone" class="form-control input-sm"> 
-    <input type="text" name="device" placeholder="Device" class="form-control input-sm"> 
-    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
-  </form>
-  <br>
-  <pre></pre>
+
+<div class="row">
+  <div class="col-md-3">
+    <h2>Methods</h2>
+    <hr>
+    <select class="form-control" size="25" id="methods">
+    <?php
+    foreach(self::$info->apps as $name=>$params){
+      echo "<option value='".json_encode(['name'=>$name,'params'=>$params])."'>".$name.'</option>';
+    }
+    ?>
+    </select>
+  </div>
+  <div class="col-md-9">
+    <h2>Forms</h2>
+    <hr>
+    <h3 id="method"></h3>
+    <div id="form"></div>
+    <hr>
+    <pre id="result"></pre>
+  </div>
 </div>
-<hr>
-<div id="activation">
-  <h4>Активация</h4>
-  <code>api://activation/to : {"hashPhone":"(string)","hashDevice":"(string)","sms":"(string)"}</code>
-  <br><br>
-  <form class="form-inline" name="activation">
-    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
-    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
-    <input type="text" name="sms" placeholder="SMS Code" class="form-control input-sm"> 
-    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
-  </form>
-  <br>
-  <pre name="response"></pre>
-</div>
-<hr>
-<div id="enter">
-  <h4>Вход</h4>
-  <code>api://enter : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
-  <br><br>
-  <form class="form-inline" name="enter">
-    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
-    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
-    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
-  </form>
-  <br>
-  <pre name="response"></pre>
-</div>
-<hr>
-<div id="smsSend">
-  <h4>Отправка SMS</h4>
-  <code>api://sms/resending : {"hashPhone":"(string)","hashDevice":"(string)"}</code>
-  <br><br>
-  <form class="form-inline" name="smsSend">
-    <input type="text" name="hashPhone" placeholder="Hash Phone" class="form-control input-sm"> 
-    <input type="text" name="hashDevice" placeholder="Hash Device" class="form-control input-sm"> 
-    <input type="button" name="send" value="Отправить" class="btn btn-primary btn-sm">
-  </form>
-  <br>
-  <pre name="response"></pre>
-</div>
-<hr>
+
 </div>

@@ -1,4 +1,5 @@
 <?php
+namespace livesugar\framework;
 require __DIR__ . '/../vendor/autoload.php';
-(new livesugar\framework\Core(__DIR__.'/../apps/'));
+(new Core(__DIR__.'/../apps/'));
 ?>
