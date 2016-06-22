@@ -1,5 +1,5 @@
 <?php
-return function($hashDevice,$hashPhone){
+return [function($hashDevice,$hashPhone){
 
   # преверяем на бан
   if($this->ban->is()){
@@ -44,5 +44,5 @@ return function($hashDevice,$hashPhone){
   }
   self::$http = true;
   return true;
-}
+},'PUBLIC'];
 ?>

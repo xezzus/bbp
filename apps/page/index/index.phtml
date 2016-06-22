@@ -6,8 +6,17 @@
     <hr>
     <select class="form-control" size="25" id="methods">
     <?php
-    foreach(self::$info->apps as $name=>$params){
-      echo "<option value='".json_encode(['name'=>$name,'params'=>$params])."'>".$name.'</option>';
+    foreach(self::$info->apps as $name=>$val){
+      if($val['public'] === true) $public[$name] = $val;
+      else $private[$name] = $val;
+    }
+    echo "<option disabled style='background:#333;color:#eee;'>PUBLIC</option>";
+    foreach($public as $name=>$val){
+      echo "<option value='".json_encode(['name'=>$name,'params'=>$val['params']])."'>".$name.'</option>';
+    }
+    echo "<option disabled style='background:#333;color:#eee;'>PRIVATE</option>";
+    foreach($private as $name=>$val){
+      echo "<option value='".json_encode(['name'=>$name,'params'=>$val['params']])."'>".$name.'</option>';
     }
     ?>
     </select>

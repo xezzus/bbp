@@ -1,5 +1,5 @@
 <?php
-return function($hashPhone,$hashDevice,$sms){
+return [function($hashPhone,$hashDevice,$sms){
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
@@ -49,5 +49,5 @@ return function($hashPhone,$hashDevice,$sms){
     self::$http = true;
     return ['msg'=>'set is banned 24 hour'];
   }
-}
+},'PUBLIC'];
 ?>
