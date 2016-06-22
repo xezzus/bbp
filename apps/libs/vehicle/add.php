@@ -1,4 +1,4 @@
 <?php
-return function($token,$number){
-}
+return [function($token,$number){
+},'PUBLIC'];
 ?>
