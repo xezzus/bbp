@@ -257,6 +257,7 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$yt0gZr61BErX
 
 COPY vehicle (phone_hash, number, time_create) FROM stdin;
 $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	123	1466965450
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	F45g67	1466966193
 \.
 
 
