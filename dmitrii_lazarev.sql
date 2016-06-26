@@ -193,7 +193,7 @@ COPY bans (id, ip, "time") FROM stdin;
 -- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 33, true);
+SELECT pg_catalog.setval('bans_id_seq', 35, true);
 
 
 --
@@ -201,6 +201,7 @@ SELECT pg_catalog.setval('bans_id_seq', 33, true);
 --
 
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	20220	f
 $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	45679	t
 \.
 
@@ -209,7 +210,7 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897as
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 355, true);
+SELECT pg_catalog.setval('registration_id_seq', 358, true);
 
 
 --
@@ -245,7 +246,8 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 --
 
 COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$7TvIbe/dWhEVp6HekUc8KuQBh9pkLyxgrF1NarbuCWzU55AiTbYFm	1466932755	www
+$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$yt0gZr61BErXPEwDc.egderwSqaVRVJs0Ihx3KLqqaTRBF7jpcLoK	1466966137	www
 \.
 
 
@@ -254,6 +256,7 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$7TvIbe/dWhEV
 --
 
 COPY vehicle (phone_hash, number, time_create) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	123	1466965450
 \.
 
 
