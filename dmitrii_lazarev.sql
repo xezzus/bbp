@@ -145,7 +145,8 @@ CREATE TABLE users (
     phone_hash text NOT NULL,
     token text,
     token_time_create integer DEFAULT 0 NOT NULL,
-    phone text NOT NULL
+    phone text NOT NULL,
+    rating integer DEFAULT 0 NOT NULL
 );
 
 
@@ -193,7 +194,7 @@ COPY bans (id, ip, "time") FROM stdin;
 -- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 35, true);
+SELECT pg_catalog.setval('bans_id_seq', 37, true);
 
 
 --
@@ -202,6 +203,7 @@ SELECT pg_catalog.setval('bans_id_seq', 35, true);
 
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
 $2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	20220	f
+$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	40959	f
 $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	45679	t
 \.
 
@@ -210,7 +212,7 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897as
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 358, true);
+SELECT pg_catalog.setval('registration_id_seq', 361, true);
 
 
 --
@@ -245,9 +247,10 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY users (phone_hash, token, token_time_create, phone) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$yt0gZr61BErXPEwDc.egderwSqaVRVJs0Ihx3KLqqaTRBF7jpcLoK	1466966137	www
+COPY users (phone_hash, token, token_time_create, phone, rating) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0
+$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$lNsN5ECbEwX.XXZlrbBsIO45yttEbWSoKz/oqE4GK5Ss25MxH9T1e	1467134353	www	1
 \.
 
 
