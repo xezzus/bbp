@@ -76,6 +76,16 @@ CREATE TABLE devices (
 
 
 --
+-- Name: gps; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE gps (
+    user_id text NOT NULL,
+    gps text NOT NULL
+);
+
+
+--
 -- Name: requests; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -146,7 +156,8 @@ CREATE TABLE users (
     token text,
     token_time_create integer DEFAULT 0 NOT NULL,
     phone text NOT NULL,
-    rating integer DEFAULT 0 NOT NULL
+    rating integer DEFAULT 0 NOT NULL,
+    gps boolean DEFAULT false NOT NULL
 );
 
 
@@ -209,6 +220,16 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897as
 
 
 --
+-- Data for Name: gps; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY gps (user_id, gps) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	teset
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	teset
+\.
+
+
+--
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
@@ -247,10 +268,10 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY users (phone_hash, token, token_time_create, phone, rating) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0
-$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$vps1oj1qw65DmHTzgB6KI.DAtjo45ro/m7WzwfNbTWF9XfudrIvsu	1467181370	www	1
+COPY users (phone_hash, token, token_time_create, phone, rating, gps) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0	f
+$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0	f
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$sLtDiEGhGrk6vqqP4vrJ9OfkLQ8kmzvLjLQkflvTmEOt4UPaRBCHy	1467182295	www	1	f
 \.
 
 
