@@ -1,5 +1,5 @@
 <?php
-return [function($token,$size,$page=1){
+return [function($token,$size){
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
@@ -18,6 +18,7 @@ return [function($token,$size,$page=1){
         # токен просрочен
         return 'EXPIRED';
       } else {
+        $page = 1;
         $page = ($page < 1) ? 1 : $page ;
         $offset = ($page-1)*$size;
         $db = $this->db->pg();
