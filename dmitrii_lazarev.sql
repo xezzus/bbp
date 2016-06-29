@@ -250,7 +250,7 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 COPY users (phone_hash, token, token_time_create, phone, rating) FROM stdin;
 $2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0
 $2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$lNsN5ECbEwX.XXZlrbBsIO45yttEbWSoKz/oqE4GK5Ss25MxH9T1e	1467134353	www	1
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$vps1oj1qw65DmHTzgB6KI.DAtjo45ro/m7WzwfNbTWF9XfudrIvsu	1467181370	www	1
 \.
 
 

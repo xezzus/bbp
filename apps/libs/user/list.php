@@ -1,5 +1,5 @@
 <?php
-return [function($token){
+return [function($token,$size,$page=1){
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
@@ -18,8 +18,10 @@ return [function($token){
         # токен просрочен
         return 'EXPIRED';
       } else {
+        $page = ($page < 1) ? 1 : $page ;
+        $offset = ($page-1)*$size;
         $db = $this->db->pg();
-        $sql = "select phone_hash as id from users order by rating desc ";
+        $sql = "select phone_hash as id from users order by rating desc offset $offset limit $size";
         $sql = $db->prepare($sql);
         $sql->execute();
         $res = $sql->fetchAll();
