@@ -1,5 +1,5 @@
 <?php
-return [function($token,$gps){
+return [function($token,$gps,$used){
 
   # преверяем на бан
   if($this->ban->is()){
@@ -19,19 +19,33 @@ return [function($token,$gps){
         # токен просрочен
         return 'EXPIRED';
       } else {
-        $db = $this->db->pg();
-        $sql = "insert into gps (user_id,gps) values ((select phone_hash from users where token = :token limit 1),:gps) returning true as true;";
-        $sql = $db->prepare($sql);
-        $sql->execute([':token'=>$token,':gps'=>$gps]);
-        $res = $sql->fetch();
-        if($res === false) return false;
-        else {
-          $sql = "update users set gps = true where token = :token returning true as true";
+        # проверяем координаты на формат
+        $gps = trim($gps);
+        if(preg_match('/^\d{1,2}\.\d{6}\,\d{1,2}\.\d{6}$/Uui',$gps)){
+          $gps = explode(',',$gps);
+          $latitude = $gps[0];
+          $longitude = $gps[1];
+          # запись
+          $db = $this->db->pg();
+          $sql = "insert into gps (user_id,latitude,longitude,used,time) values ((select phone_hash from users where token = :token limit 1),:latitude,:longitude,:used,'".time()."') returning true as true;";
           $sql = $db->prepare($sql);
-          $sql->execute([':token'=>$token]);
+          $sql->execute([':token'=>$token,':latitude'=>$latitude,':longitude'=>$longitude,':used'=>$used]);
           $res = $sql->fetch();
-          if($res === false) return false;
-          else return true;
+          if($res === false) return 'INSERT ERROR';
+          else {
+            if($used == true){
+              $sql = "update users set gps = true where token = :token returning true as true";
+              $sql = $db->prepare($sql);
+              $sql->execute([':token'=>$token]);
+              $res = $sql->fetch();
+              if($res === false) return 'UPDATE ERROR';
+              else return 'SUCCESS';
+            } else {
+              return 'USED FALSE';
+            }
+          }
+        } else {
+          return ['GPS MALFORMED'];
         }
       }
     }

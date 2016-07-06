@@ -81,7 +81,23 @@ CREATE TABLE devices (
 
 CREATE TABLE gps (
     user_id text NOT NULL,
-    gps text NOT NULL
+    used boolean DEFAULT false NOT NULL,
+    latitude double precision,
+    longitude double precision,
+    "time" integer
+);
+
+
+--
+-- Name: msg; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE msg (
+    sender text NOT NULL,
+    recipient text,
+    code smallint NOT NULL,
+    vehicle_number text NOT NULL,
+    "time" integer NOT NULL
 );
 
 
@@ -157,7 +173,8 @@ CREATE TABLE users (
     token_time_create integer DEFAULT 0 NOT NULL,
     phone text NOT NULL,
     rating integer DEFAULT 0 NOT NULL,
-    gps boolean DEFAULT false NOT NULL
+    gps boolean DEFAULT false NOT NULL,
+    msgid text
 );
 
 
@@ -205,7 +222,7 @@ COPY bans (id, ip, "time") FROM stdin;
 -- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 37, true);
+SELECT pg_catalog.setval('bans_id_seq', 40, true);
 
 
 --
@@ -215,6 +232,8 @@ SELECT pg_catalog.setval('bans_id_seq', 37, true);
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
 $2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	20220	f
 $2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	40959	f
+$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	84680	t
+$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	74329	t
 $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	45679	t
 \.
 
@@ -223,9 +242,21 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897as
 -- Data for Name: gps; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY gps (user_id, gps) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	teset
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	teset
+COPY gps (user_id, used, latitude, longitude, "time") FROM stdin;
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2040440000000032	1467733671
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2050440000000009	1467733675
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2060439999999986	1467733678
+$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	t	51.6751209999999972	39.2061360000000008	1467734318
+$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	t	51.6747820000000004	39.1990869999999987	1467734973
+$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	t	51.6751280000000008	39.2062110000000033	1467735201
+\.
+
+
+--
+-- Data for Name: msg; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY msg (sender, recipient, code, vehicle_number, "time") FROM stdin;
 \.
 
 
@@ -233,7 +264,7 @@ $2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	teset
 -- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 361, true);
+SELECT pg_catalog.setval('registration_id_seq', 367, true);
 
 
 --
@@ -268,10 +299,12 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY users (phone_hash, token, token_time_create, phone, rating, gps) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0	f
-$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0	f
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$sLtDiEGhGrk6vqqP4vrJ9OfkLQ8kmzvLjLQkflvTmEOt4UPaRBCHy	1467182295	www	1	f
+COPY users (phone_hash, token, token_time_create, phone, rating, gps, msgid) FROM stdin;
+$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0	f	\N
+$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0	f	\N
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$Wjhw0Lm.Xoc5cOEiEDYVTec2bjsZHYHi364O8aYrpglIVjacLGFnC	1467734050	www	1	t	123
+$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	$2y$11$Oy4BToZ1i7kU/kwJ3HBPVuw53ovOsJoX0levNs2wtYFvgt1e5dDpG	1467735184	ddd	0	t	\N
+$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2y$11$B2Q.vxjLmRNB/HnXpwzQoOgto8yxpwFlDm.sMFumPVDXDiEE5wNIq	1467735228	ggg	0	t	\N
 \.
 
 
