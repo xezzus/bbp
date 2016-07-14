@@ -3,7 +3,7 @@ return [function($msgid,$message){
 // API access key from Google API's Console
 // replace API
 $title = 'test';
-$to = 'eq6Bkr0uA3I:APA91bHu9dl72DGEI6Hazcx0jEjAVpQZbyA3WbBmngWru_3rl1RWfdlvQbiINXQO_WXbuWTDtLkPvfNkzNGlMo-dTtP4yk0uLi-H4rOzhovs5671SGNaTrPrnKapd_5QxRZ5JlffJUJh';
+$to = 'e4K1BbL5QVg:APA91bG2Jf8ok9sB8CQoHUAp6fl-xKvoeQTWh64Kz049btYIN9B8cQhPc-PURQZl-P3D3nysaVAPFEb2wA1ymZYLQLM_Dp9-PPnZhyjqeljgdwyKNtQtx4djmD3AsDs4kOj8Z2P1lyoM';
 $registrationIds = array($to);
 $msg = array
 (
@@ -21,7 +21,7 @@ $fields = array
 );
 $headers = array
 (
-'Authorization: key=AIzaSyDx2WLQakxBTEVgSj-HEyDy_eXdcJpXXao',
+'Authorization: key=AIzaSyBgFDvm1VzJemH3y-AXp8CdITBssRPvn3k',
 'Content-Type: application/json'
 );
 $ch = curl_init();
