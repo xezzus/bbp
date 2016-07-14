@@ -34,10 +34,12 @@ return [function($token,$msgCode,$vehicleNumber){
               $usersRecipient[] = $val['msgid'];
             }
           }
-          $this->msg->go($usersRecipient);
+          //$this->msg->go($usersRecipient);
+          if($this->msg->db->insert($user,null,$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
+          else return 'INSERT ERROR';
         } else {
           # ищем по номеру авто
-          $sql = "select msgId from users where phone_hash = (select phone_hash from vehicles where \"number\" = :number limit 1) limit 1";
+          $sql = "select msgId,phone_hash from users where phone_hash = (select phone_hash from vehicles where \"number\" = :number limit 1) limit 1";
           $sql = $db->prepare($sql);
           $sql->execute([':number'=>$vehicleNumber]);
           $res = $sql->fetch();
@@ -47,7 +49,9 @@ return [function($token,$msgCode,$vehicleNumber){
             else return 'INSERT ERROR';
           } else {
             # нашли
-            $this->msg->go($res['msgid']);
+            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
+            else return 'INSERT ERROR';
+            //$this->msg->go($res['msgid']);
           }
         }
       }

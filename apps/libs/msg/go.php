@@ -3,7 +3,7 @@ return [function($msgid,$message){
 // API access key from Google API's Console
 // replace API
 $title = 'test';
-$to = $msgid
+$to = $msgid;
 $registrationIds = array($to);
 $msg = array
 (

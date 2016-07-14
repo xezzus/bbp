@@ -222,7 +222,7 @@ COPY bans (id, ip, "time") FROM stdin;
 -- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 40, true);
+SELECT pg_catalog.setval('bans_id_seq', 41, true);
 
 
 --
@@ -257,6 +257,13 @@ $2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	t	51.67512800000000
 --
 
 COPY msg (sender, recipient, code, vehicle_number, "time") FROM stdin;
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479963
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479989
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479989
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479990
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479990
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479991
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479991
 \.
 
 
@@ -302,9 +309,9 @@ COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
 COPY users (phone_hash, token, token_time_create, phone, rating, gps, msgid) FROM stdin;
 $2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0	f	\N
 $2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0	f	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$Wjhw0Lm.Xoc5cOEiEDYVTec2bjsZHYHi364O8aYrpglIVjacLGFnC	1467734050	www	1	t	123
 $2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	$2y$11$Oy4BToZ1i7kU/kwJ3HBPVuw53ovOsJoX0levNs2wtYFvgt1e5dDpG	1467735184	ddd	0	t	\N
-$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2y$11$B2Q.vxjLmRNB/HnXpwzQoOgto8yxpwFlDm.sMFumPVDXDiEE5wNIq	1467735228	ggg	0	t	\N
+$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2y$11$ZFImMJRQy/nrzPVgohR/9OZz5fsc3qLSDPpFLoPKgjBcIW4dgHeym	1468424519	ggg	0	t	\N
+$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$kCZ62l6EDbg9zMeptXV3QOap58hAbdzVe4syMvucJY5itmat6qefO	1468480441	www	1	t	123
 \.
 
 
