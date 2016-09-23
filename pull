@@ -1,3 +1,3 @@
 #!/bin/sh
 
-cd /var/www/dlazarev/data/www/soknn.ru && /usr/bin/git pull origin master
+/usr/bin/git pull origin master
