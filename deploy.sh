@@ -6,6 +6,9 @@ for i in $(seq 1 3); do
 		psql -d bbp -U bbp -w < dump.sql
 		rm upgradePg
 	fi
+  git add -A
+  git commit -m "Deploy"
+  git push origin master
 	sleep 3;
 done
 
