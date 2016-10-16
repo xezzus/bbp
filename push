@@ -1,5 +1,5 @@
 #!/bin/sh
-
+/usr/bin/git pull origin master
 /usr/bin/git add -A
 /usr/bin/git commit -m "Developing"
 /usr/bin/git push origin master
