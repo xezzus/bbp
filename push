@@ -1,5 +1,6 @@
 #!/bin/sh
 /usr/bin/git pull origin master
 /usr/bin/git add -A
-/usr/bin/git commit -m "Developing"
+DATE=`date +%d-%m-%Y' '%H:%M:%S`
+/usr/bin/git commit -m "$DATE"
 /usr/bin/git push origin master
