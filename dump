@@ -1,2 +1,2 @@
 #!/bin/sh
-/usr/bin/pg_dump -d dmitrii_lazarev -h localhost -U postgres -x -O --use-set-session-authorization -w > dmitrii_lazarev.sql
+/usr/bin/pg_dump -d api -h localhost -U api --use-set-session-authorization -W > dump.sql
