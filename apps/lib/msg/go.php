@@ -4,6 +4,7 @@ return [function($msgid,$message){
 // replace API
 $title = 'test';
 $to = 'dI_tgmpogbE:APA91bGwlftEGM8tGf4kt6umzOqNPnH-1lPLkBc1OQl12qIT7he4G3XG2gt3bIPcL3evGvaKF9dPrdlufmNPb1YTCRnq8aNaG8Gw5qHwo_BMvmv31txRqhURj4E0kw5YD9mB5Uqqmv6r';
+$to = $msgid;
 $registrationIds = array($to);
 $msg = array
 (
