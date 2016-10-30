@@ -21,7 +21,7 @@ return [function($token,$gps,$used){
       } else {
         # проверяем координаты на формат
         $gps = trim($gps);
-        if(preg_match('/^\d{1,2}\.\d{6}\,[\S]*\d{1,2}\.\d{6}$/Uui',$gps)){
+        if(preg_match('/^\d{1,2}\.\d{6}\,[\s]*\d{1,2}\.\d{6}$/Uui',$gps)){
           $gps = explode(',',$gps);
           $latitude = $gps[0];
           $longitude = $gps[1];
