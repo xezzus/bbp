@@ -31,6 +31,7 @@ return [function($token,$gps,$used){
           $sql = $db->prepare($sql);
           $sql->execute([':token'=>$token,':latitude'=>$latitude,':longitude'=>$longitude,':used'=>$used]);
           $res = $sql->fetch();
+          var_dump($sql->errorInfo());
           if($res === false) return 'INSERT ERROR';
           else {
             if($used == true){
