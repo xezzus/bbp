@@ -34,7 +34,7 @@ return [function($token,$msgCode,$vehicleNumber){
               $usersRecipient[] = $val['msgid'];
             }
           }
-          //$this->msg->go($usersRecipient);
+          $this->msg->go($usersRecipient);
           if($this->msg->db->insert($user,null,$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
           else return 'INSERT ERROR';
         } else {
@@ -51,7 +51,7 @@ return [function($token,$msgCode,$vehicleNumber){
             # нашли
             if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
             else return 'INSERT ERROR';
-            //$this->msg->go($res['msgid']);
+            $this->msg->go($res['msgid']);
           }
         }
       }
