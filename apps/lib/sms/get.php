@@ -5,7 +5,6 @@ return [function($hashDevice,$hashPhone){
   $db->exec($sql);    
   $res = $sql->fetch();
   return ['sms'=> $res];
-];
-
-},'PUBLIC'];
+  return 0;
+},'PRIVAT'];
 ?>
