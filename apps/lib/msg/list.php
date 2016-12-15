@@ -20,7 +20,7 @@ return [function($token,$size){
       } else {
         $db = $this->db->pg();
         $user = $this->user->db->getUserByToken($token);
-        $sql = "select sender,code,vehicle_number,time,flag from msg where sender = '$user' order by time desc limit ".(int) $size;
+        $sql = "select sender,code,vehicle_number,time,flag from msg where recipient = '$user' order by time desc limit ".(int) $size;
         $res = $db->query($sql)->fetchAll();
         return $res;
       }
