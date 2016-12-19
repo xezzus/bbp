@@ -1,6 +1,5 @@
 <?php
-
-return function($hashDevice){
+return [function($hashDevice){
 
   $db = $this->db->pg();
   $sql = "SELECT sms FROM devices WHERE device_hash = :hashDevice";
@@ -9,5 +8,5 @@ return function($hashDevice){
   $res = $sql->fetch();
   return ['sms'=> $res['sms']];
 
-}
+},'PUBLIC'];
 ?>

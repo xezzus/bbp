@@ -1,0 +1,13 @@
+<style>
+.syslog {
+padding:3px;
+font-size:12px;
+}
+</style>
+<?php
+$syslog = file('/var/log/syslog');
+foreach($syslog as $key=>$value){
+  //if(!strstr('webserver bbp',$value)) continue;
+  echo '<div class="syslog">'.$value.'</div>';
+}
+?>

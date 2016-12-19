@@ -1,5 +1,6 @@
 <?php
 return [function($token,$msgCode,$vehicleNumber){
+  $this->log('test');
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
@@ -32,11 +33,10 @@ return [function($token,$msgCode,$vehicleNumber){
             $dist = $this->gps->distance($userPoint['latitude'],$userPoint['longitude'],$point['latitude'],$point['longitude']);
             if($dist <= 1000 && $dist >= 1){
               $usersRecipient[] = $val['msgid'];
+              $this->msg->go($val['msgid'],'test');
+              if($this->msg->db->insert($user,$val['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
             }
           }
-          $this->msg->go($usersRecipient);
-          if($this->msg->db->insert($user,null,$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
-          else return 'INSERT ERROR';
         } else {
           # ищем по номеру авто
           $sql = "select msgId,phone_hash from users where phone_hash = (select phone_hash from vehicles where \"number\" = :number limit 1) limit 1";
@@ -45,13 +45,13 @@ return [function($token,$msgCode,$vehicleNumber){
           $res = $sql->fetch();
           if($res === false) {
             # не нашли
-            if($this->msg->db->insert($user,null,$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
+            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB 1'; 
             else return 'INSERT ERROR';
           } else {
             # нашли
-            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
+            $this->msg->go($res['msgid'],'test');
+            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB 2'; 
             else return 'INSERT ERROR';
-            $this->msg->go($res['msgid']);
           }
         }
       }
