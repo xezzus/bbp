@@ -7,7 +7,7 @@ return function($hashDevice){
   $sql = $db->prepare($sql);
   $sql->execute([':hashDevice'=>$hashDevice]);
   $res = $sql->fetch();
-  return ['sms'=> $res];
+  return ['sms'=> $res['sms']];
 
 }
 ?>
