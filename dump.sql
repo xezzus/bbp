@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.4
--- Dumped by pg_dump version 9.5.4
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -29,7 +30,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET SESSION AUTHORIZATION 'api';
+SET SESSION AUTHORIZATION 'bbp';
 
 SET search_path = public, pg_catalog;
 
@@ -38,7 +39,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: bans; Type: TABLE; Schema: public; Owner: api
+-- Name: bans; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE bans (
@@ -49,7 +50,7 @@ CREATE TABLE bans (
 
 
 --
--- Name: bans_id_seq; Type: SEQUENCE; Schema: public; Owner: api
+-- Name: bans_id_seq; Type: SEQUENCE; Schema: public; Owner: bbp
 --
 
 CREATE SEQUENCE bans_id_seq
@@ -61,14 +62,14 @@ CREATE SEQUENCE bans_id_seq
 
 
 --
--- Name: bans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: api
+-- Name: bans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: bbp
 --
 
 ALTER SEQUENCE bans_id_seq OWNED BY bans.id;
 
 
 --
--- Name: devices; Type: TABLE; Schema: public; Owner: api
+-- Name: devices; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE devices (
@@ -80,7 +81,7 @@ CREATE TABLE devices (
 
 
 --
--- Name: gps; Type: TABLE; Schema: public; Owner: api
+-- Name: gps; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE gps (
@@ -93,13 +94,13 @@ CREATE TABLE gps (
 
 
 --
--- Name: msg; Type: TABLE; Schema: public; Owner: api
+-- Name: msg; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE msg (
     sender text NOT NULL,
     recipient text,
-    code smallint NOT NULL,
+    code smallint,
     vehicle_number text NOT NULL,
     "time" integer NOT NULL,
     flag integer
@@ -107,7 +108,7 @@ CREATE TABLE msg (
 
 
 --
--- Name: requests; Type: TABLE; Schema: public; Owner: api
+-- Name: requests; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE requests (
@@ -121,7 +122,7 @@ CREATE TABLE requests (
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: api
+-- Name: registration_id_seq; Type: SEQUENCE; Schema: public; Owner: bbp
 --
 
 CREATE SEQUENCE registration_id_seq
@@ -133,14 +134,14 @@ CREATE SEQUENCE registration_id_seq
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: api
+-- Name: registration_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: bbp
 --
 
 ALTER SEQUENCE registration_id_seq OWNED BY requests.id;
 
 
 --
--- Name: request_types; Type: TABLE; Schema: public; Owner: api
+-- Name: request_types; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE request_types (
@@ -150,7 +151,7 @@ CREATE TABLE request_types (
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: api
+-- Name: request_types_id_seq; Type: SEQUENCE; Schema: public; Owner: bbp
 --
 
 CREATE SEQUENCE request_types_id_seq
@@ -162,14 +163,14 @@ CREATE SEQUENCE request_types_id_seq
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: api
+-- Name: request_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: bbp
 --
 
 ALTER SEQUENCE request_types_id_seq OWNED BY request_types.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: api
+-- Name: users; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE users (
@@ -184,7 +185,7 @@ CREATE TABLE users (
 
 
 --
--- Name: vehicle; Type: TABLE; Schema: public; Owner: api
+-- Name: vehicle; Type: TABLE; Schema: public; Owner: bbp
 --
 
 CREATE TABLE vehicle (
@@ -195,28 +196,28 @@ CREATE TABLE vehicle (
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: api
+-- Name: bans id; Type: DEFAULT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY bans ALTER COLUMN id SET DEFAULT nextval('bans_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: api
+-- Name: request_types id; Type: DEFAULT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY request_types ALTER COLUMN id SET DEFAULT nextval('request_types_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: api
+-- Name: requests id; Type: DEFAULT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY requests ALTER COLUMN id SET DEFAULT nextval('registration_id_seq'::regclass);
 
 
 --
--- Data for Name: bans; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: bans; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY bans (id, ip, "time") FROM stdin;
@@ -224,65 +225,62 @@ COPY bans (id, ip, "time") FROM stdin;
 
 
 --
--- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: api
+-- Name: bans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: bbp
 --
 
-SELECT pg_catalog.setval('bans_id_seq', 41, true);
+SELECT pg_catalog.setval('bans_id_seq', 1, false);
 
 
 --
--- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: devices; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY devices (phone_hash, device_hash, sms, activated) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	20220	f
-$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	40959	f
-$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	84680	t
-$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	74329	t
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	45679	t
-$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	68909	t
+$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	64959	t
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	22370	t
 \.
 
 
 --
--- Data for Name: gps; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: gps; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY gps (user_id, used, latitude, longitude, "time") FROM stdin;
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2040440000000032	1467733671
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2050440000000009	1467733675
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	t	51.6726859999999988	39.2060439999999986	1467733678
-$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	t	51.6751209999999972	39.2061360000000008	1467734318
-$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	t	51.6747820000000004	39.1990869999999987	1467734973
-$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	t	51.6751280000000008	39.2062110000000033	1467735201
+$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	t	1.32590199999999991	1.00657299999999994	1482192755
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	f	1.32590199999999991	1.00657299999999994	1482192877
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	f	1.32590199999999991	1.00657299999999994	1482192883
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	f	1.32590199999999991	1.00657299999999994	1482192885
+$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	t	1.32590300000000005	1.00657400000000008	1482193092
 \.
 
 
 --
--- Data for Name: msg; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: msg; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY msg (sender, recipient, code, vehicle_number, "time", flag) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479963	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479989	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479989	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479990	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479990	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479991	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	\N	1	dfgh	1468479991	\N
-$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	\N	2	888	1476878476	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	\N		1482671685	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	\N	A001AA152	1482671828	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	\N	A001AA152	1482671894	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	\N	A001AA152	1482671954	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	\N	A001AA152	1482671973	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	123	1482672312	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	123	1482672348	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	123	1482672350	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	123	1482672422	\N
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	\N	\N	123d	1482672426	\N
 \.
 
 
 --
--- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: api
+-- Name: registration_id_seq; Type: SEQUENCE SET; Schema: public; Owner: bbp
 --
 
-SELECT pg_catalog.setval('registration_id_seq', 369, true);
+SELECT pg_catalog.setval('registration_id_seq', 4, true);
 
 
 --
--- Data for Name: request_types; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: request_types; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY request_types (id, name) FROM stdin;
@@ -295,48 +293,46 @@ COPY request_types (id, name) FROM stdin;
 
 
 --
--- Name: request_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: api
+-- Name: request_types_id_seq; Type: SEQUENCE SET; Schema: public; Owner: bbp
 --
 
 SELECT pg_catalog.setval('request_types_id_seq', 3, true);
 
 
 --
--- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: requests; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY requests (id, "time", ip, device_hash, phone_hash, type) FROM stdin;
-368	1476878309	192.168.0.2	$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	1
-369	1476878447	192.168.0.2	$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	3
+1	1482192594	165.225.66.56	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	1
+2	1482192641	165.225.66.56	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	3
+3	1482192786	165.225.66.56	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	1
+4	1482192833	165.225.66.56	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	3
 \.
 
 
 --
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY users (phone_hash, token, token_time_create, phone, rating, gps, msgid) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfuMBFmoC1fbYsyc90xJRbrA32DUQGp1Uu	\N	0	df	0	f	\N
-$2a$07$lkjasdf897asdf897asdfuESvzI1NPt3nzH.S.kqz4ZGBWjyeFDP2	\N	0		0	f	\N
-$2a$07$lkjasdf897asdf897asdfueGgqKz8FJGSwttTi0kTchBakzbpewBq	$2y$11$Oy4BToZ1i7kU/kwJ3HBPVuw53ovOsJoX0levNs2wtYFvgt1e5dDpG	1467735184	ddd	0	t	\N
-$2a$07$lkjasdf897asdf897asdfuft7CCV4XmqmfO00e2lvU7ynhfWkwcIi	$2y$11$ZFImMJRQy/nrzPVgohR/9OZz5fsc3qLSDPpFLoPKgjBcIW4dgHeym	1468424519	ggg	0	t	\N
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	$2y$11$kCZ62l6EDbg9zMeptXV3QOap58hAbdzVe4syMvucJY5itmat6qefO	1468480441	www	1	t	123
-$2a$07$lkjasdf897asdf897asdfuCAj2TfraBvvFSWClIXXz74gAU1gxVV.	$2y$11$WKQHzrW1zrSi1pnYwoILNuFZK19NA9ahQw0W5dzDc8wMBvgUVC6KG	1476879235	555	0	f	\N
+$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	$2y$11$Mb4RYWT.GIU5evZZ.VOMoOCQJd3tfIBUy6YlsDaW.MkK6NkRKoeIO	1482193029	100	0	t	dI_tgmpogbE:APA91bGwlftEGM8tGf4kt6umzOqNPnH-1lPLkBc1OQl12qIT7he4G3XG2gt3bIPcL3evGvaKF9dPrdlufmNPb1YTCRnq8aNaG8Gw5qHwo_BMvmv31txRqhURj4E0kw5YD9mB5Uqqmv6r
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	$2y$11$ZWgqLt7AOYikhfjJ6Me/rOgqbwGikpShbj0TJVB5xay34NtFVZi3u	1482672222	200	0	t	\N
 \.
 
 
 --
--- Data for Name: vehicle; Type: TABLE DATA; Schema: public; Owner: api
+-- Data for Name: vehicle; Type: TABLE DATA; Schema: public; Owner: bbp
 --
 
 COPY vehicle (phone_hash, number, time_create) FROM stdin;
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	123	1466965450
-$2a$07$lkjasdf897asdf897asdfueS14JzzxMUqcanIrpHcuuArUo6j0f8G	F45g67	1466966193
+$2a$07$lkjasdf897asdf897asdfux4jkRT69nD4.GQ4MALR7VogZX7KJdVG	A001AA152	1482192727
+$2a$07$lkjasdf897asdf897asdfuOAvR32zR/bwRpP5t2GofZ9pOpQukQ4.	123	1482671778
 \.
 
 
 --
--- Name: bans_id; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: bans bans_id; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY bans
@@ -344,7 +340,7 @@ ALTER TABLE ONLY bans
 
 
 --
--- Name: devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: devices devices_device_hash; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY devices
@@ -352,7 +348,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: devices_device_hash_phone_hash; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: devices devices_device_hash_phone_hash; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY devices
@@ -360,7 +356,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: devices_phone_hash; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: devices devices_phone_hash; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY devices
@@ -368,7 +364,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: devices_phone_hash_device_hash; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: devices devices_phone_hash_device_hash; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY devices
@@ -376,7 +372,7 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: request_types_id; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: request_types request_types_id; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY request_types
@@ -384,7 +380,7 @@ ALTER TABLE ONLY request_types
 
 
 --
--- Name: request_types_name; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: request_types request_types_name; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY request_types
@@ -392,7 +388,7 @@ ALTER TABLE ONLY request_types
 
 
 --
--- Name: requests_id; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: requests requests_id; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY requests
@@ -400,7 +396,7 @@ ALTER TABLE ONLY requests
 
 
 --
--- Name: users_phone_hash; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: users users_phone_hash; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY users
@@ -408,7 +404,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: users_token; Type: CONSTRAINT; Schema: public; Owner: api
+-- Name: users users_token; Type: CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY users
@@ -416,21 +412,21 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: bans_ip_time; Type: INDEX; Schema: public; Owner: api
+-- Name: bans_ip_time; Type: INDEX; Schema: public; Owner: bbp
 --
 
 CREATE INDEX bans_ip_time ON bans USING btree (ip, "time");
 
 
 --
--- Name: vehicle_phone_hash; Type: INDEX; Schema: public; Owner: api
+-- Name: vehicle_phone_hash; Type: INDEX; Schema: public; Owner: bbp
 --
 
 CREATE INDEX vehicle_phone_hash ON vehicle USING btree (phone_hash);
 
 
 --
--- Name: devices_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: api
+-- Name: devices devices_phone_hash_fkey; Type: FK CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY devices
@@ -438,23 +434,11 @@ ALTER TABLE ONLY devices
 
 
 --
--- Name: requests_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: api
+-- Name: requests requests_type_fkey; Type: FK CONSTRAINT; Schema: public; Owner: bbp
 --
 
 ALTER TABLE ONLY requests
     ADD CONSTRAINT requests_type_fkey FOREIGN KEY (type) REFERENCES request_types(id) ON UPDATE CASCADE ON DELETE SET DEFAULT;
-
-
-SET SESSION AUTHORIZATION 'postgres';
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
