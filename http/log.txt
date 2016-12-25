@@ -28,3 +28,4 @@ msg/go  test
 msg/go  test
 msg/go  test
 msg/go  test
+msg/go 123 test
