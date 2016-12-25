@@ -1,7 +1,5 @@
 <?php
 return function($msg){
-  openlog("bbp", LOG_PERROR, LOG_LOCAL0);
-  syslog(LOG_WARNING, $msg);
-  closelog();
+  file_put_contents("log.txt", $msg."\n", FILE_APPEND);
 }
 ?>

@@ -1,6 +1,5 @@
 <?php
 return [function($token,$msgCode,$vehicleNumber){
-  $this->log('test');
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
@@ -24,6 +23,7 @@ return [function($token,$msgCode,$vehicleNumber){
         $user = $this->user->db->getUserByToken($token);
         $userPoint = $this->gps->db->getByToken($token);
 
+        // Код сообщения 1?
         if($msgCode == 1){
           $sql = "select phone_hash,msgid from users where gps = true";
           $res = $db->query($sql)->fetchAll();
@@ -37,21 +37,23 @@ return [function($token,$msgCode,$vehicleNumber){
               if($this->msg->db->insert($user,$val['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB'; 
             }
           }
+          if(empty($usersRecipient)) return 'Никого в радиусе 1км нету';
+          else return 'Отправили сообщения по списку';
         } else {
           # ищем по номеру авто
-          $sql = "select msgId,phone_hash from users where phone_hash = (select phone_hash from vehicles where \"number\" = :number limit 1) limit 1";
+          $sql = "select msgid,phone_hash from users where phone_hash = (select phone_hash from vehicle where \"number\" = :number limit 1) limit 1";
           $sql = $db->prepare($sql);
           $sql->execute([':number'=>$vehicleNumber]);
           $res = $sql->fetch();
           if($res === false) {
             # не нашли
-            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB 1'; 
-            else return 'INSERT ERROR';
+            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'По этому номеру автомибиля, никого нет.'; 
+            else return 'INSERT ERROR 1';
           } else {
             # нашли
             $this->msg->go($res['msgid'],'test');
-            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'INSERT MSG TO DB 2'; 
-            else return 'INSERT ERROR';
+            if($this->msg->db->insert($user,$res['phone_hash'],$msgCode,$vehicleNumber,time())) return 'Отправили сообщение по номеру автомобиля'; 
+            else return 'INSERT ERROR 2';
           }
         }
       }

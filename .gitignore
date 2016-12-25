@@ -1,4 +1,4 @@
 vendor
 composer.lock
-apps/libs/db/pg.json
+apps/lib/db/pg.json
 postgresql

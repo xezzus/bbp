@@ -1,5 +1,6 @@
 <?php
 return [function($msgid,$message){
+$this->log('msg/go '.$msgid.' '.$message);
 // API access key from Google API's Console
 // replace API
 $title = 'test';
