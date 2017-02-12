@@ -1,14 +1,1 @@
-# Documentation
-
-## API
-
-### registration
-
-#### Request
-`
-api://registration : {"phone":"(string)","device":"(string)"}
-`
-#### Response
-`
-{"msg":"ban for ip"}
-`
+[Серверный API](https://bitbucket.org/bbp_beta/bbp/wiki/%D0%A1%D0%BF%D0%B5%D1%86%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F%20API)
