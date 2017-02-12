@@ -1,7 +1,9 @@
 <?php
 return [function($token,$number){
+  $this->log('start vehicle/add');
   # преверяем на бан
   if($this->ban->is()){
+    $this->log('vehicle/add ban');
     self::$http = true;
     return ['msg'=>'it is banned'];
   }

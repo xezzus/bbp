@@ -1,11 +1,13 @@
 <?php
 return [function($token,$msgId){
-
+  $this->log('start msg/subscribe');
   # преверяем на бан
   if($this->ban->is()){
+    $this->log('msg/subscribe ban');
     self::$http = true;
     return ['msg'=>'it is banned'];
   }
+  $this->log('msg/subscribe begin');
 
   # проверить токен
   if($this->token->is($token)){

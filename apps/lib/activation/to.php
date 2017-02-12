@@ -1,14 +1,20 @@
 <?php
 return [function($hashPhone,$hashDevice,$sms){
+  $this->log('start activation/to');
   # преверяем на бан
   if($this->ban->is()){
     self::$http = true;
+    $this->log('activation/to ban');
     return ['msg'=>'it is banned'];
   }
+  $this->log('activation/to begin');
 
+  $this->log(':device:'.$hashDevice.'::');
   $whois = $this->device->whois($hashDevice);
+  $this->log('::'.$whois.'::');
   # хеши существуют и связаны
   if(!empty($whois) && !empty($hashPhone) && $whois == $hashPhone){
+    $this->log('activation/to хеши существуют');
     # да
     # код введен 3 раза за 15 минут?
     if($this->request->count($hashDevice,$hashPhone,900,3) < 3){
@@ -44,6 +50,7 @@ return [function($hashPhone,$hashDevice,$sms){
       return ['msg'=>'set is banned 15 minutes'];
     }
   } else {
+    $this->log('activation/to бан на 24 часа');
     # забанить на 24 часа
     $this->ban->set(86400);
     self::$http = true;

@@ -1,5 +1,5 @@
 <?php
-return function ($lat1, $long1, $lat2, $long2)  { 
+return [function ($lat1, $long1, $lat2, $long2)  { 
  //радиус Земли 
  $R = 6372795;  
  //перевод коордитат в радианы  
@@ -22,5 +22,5 @@ return function ($lat1, $long1, $lat2, $long2)  {
  $dist = $ad * $R;  
  //расстояние между двумя координатами в метрах    
  return $dist; 
-}
+},'PUBLIC'];
 ?>
