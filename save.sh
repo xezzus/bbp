@@ -1,7 +1,2 @@
-#!/bin/sh
-
-cd /home/web/bbp-dev.xezzus.ru
-/usr/bin/git add -A
-DATE=`date +%d-%m-%Y' '%H:%M:%S`
-/usr/bin/git commit -m "$DATE"
-/usr/bin/git push origin master
+й2eV›07MП2ЁЦoЅK~Ь[ф”лЉZ-зs@$	ЖPїщVэ»,eV‘kпяЌЁІЇeB`µіҐО]Wфмp>\ЧYзY‰Л?W‘ЕyКгЪсR&jЏЭќЁь›У†kyУNјSЉь†VяК€n,Хp±џO›}ЕWЅЮјЮоќѕ.,чfИ6ћ;°Я
+xZЯщ»`З§Шъtб€Gѓ
